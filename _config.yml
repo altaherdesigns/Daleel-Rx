@@ -1,0 +1,19 @@
+title: Daleel Rx
+description: >-
+  A UAE medicine reference for pharmacists — and notes on UAE pharmacy
+  practice and regulation while it's being built.
+url: "https://daleelrx.com"
+permalink: /blog/:title/
+markdown: kramdown
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+exclude:
+  - README.md

@@ -1,0 +1,69 @@
+:root{
+  --bg:#ffffff;
+  --ink:#10151f;
+  --navy:#0b3b6f;
+  --accent:#0b7690;
+  --accent-line:#17A2C4;
+  --muted:#5b6472;
+  --border:#e1e5ea;
+  --serif:"Source Serif 4", Georgia, serif;
+  --sans:"IBM Plex Sans", -apple-system, Segoe UI, sans-serif;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.page{ max-width:640px; margin:0 auto; padding:0 1.5rem 4rem; }
+
+.site-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:2.5rem 0 3rem;
+}
+.mark{ display:flex; align-items:center; gap:0.55rem; text-decoration:none; }
+.wordmark{ font-family:var(--serif); font-weight:600; font-size:1.05rem; color:var(--navy); }
+.site-header nav a{ color:var(--muted); text-decoration:none; font-size:0.92rem; }
+.site-header nav a:hover{ color:var(--navy); }
+
+h1{ font-family:var(--serif); font-weight:500; color:var(--navy); line-height:1.3; }
+h2{ font-family:var(--serif); font-weight:600; color:var(--navy); font-size:1.15rem; margin-top:2rem; }
+p{ margin:0 0 1rem; max-width:65ch; }
+a{ color:var(--accent); text-decoration-color:var(--accent-line); text-underline-offset:2px; }
+
+.lede{ color:var(--muted); font-size:1.02rem; margin-bottom:2.2rem; }
+
+.post-list{ list-style:none; margin:0; padding:0; }
+.post-list li{
+  display:flex;
+  justify-content:space-between;
+  gap:1rem;
+  padding:1rem 0;
+  border-top:1px solid var(--border);
+}
+.post-list li:first-child{ border-top:none; }
+.post-list a{ color:var(--ink); font-weight:500; text-decoration:none; }
+.post-list a:hover{ color:var(--navy); }
+.post-list time{ color:var(--muted); font-size:0.88rem; white-space:nowrap; }
+
+.post-meta{ color:var(--muted); font-size:0.88rem; margin-bottom:0.4rem; }
+.post h1{ font-size:1.8rem; margin:0 0 1.4rem; max-width:22ch; }
+
+.sources{ margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--border); }
+.sources h2{ font-size:0.95rem; margin-top:0; margin-bottom:0.6rem; color:var(--muted); font-weight:600; }
+.sources ul{ margin:0; padding-left:1.2rem; font-size:0.92rem; }
+.sources li{ margin-bottom:0.35rem; }
+
+.site-footer{
+  margin-top:3.5rem;
+  padding-top:1.5rem;
+  border-top:1px solid var(--border);
+  font-size:0.82rem;
+  color:var(--muted);
+}

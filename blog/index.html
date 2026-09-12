@@ -1,0 +1,15 @@
+---
+layout: default
+title: Blog
+permalink: /blog/
+---
+<h1>Blog</h1>
+<p class="lede">Notes on UAE pharmacy practice and regulation, written while Daleel Rx is being built.</p>
+<ul class="post-list">
+{% for post in site.posts %}
+  <li>
+    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+    <time>{{ post.date | date: "%-d %B %Y" }}</time>
+  </li>
+{% endfor %}
+</ul>
