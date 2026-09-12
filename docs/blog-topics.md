@@ -1,7 +1,8 @@
 # Blog backlog
 
-Draft freely — none of these assert a clinical verdict on a specific drug, so none need a
-reviewer sign-off. Anything that would need one, don't add it here — flag it instead.
+Auto-drafted from the unchecked lines below by the scheduled Action. Prefix a line with
+`REVIEW:` to keep it out of automation — use that for anything that would need a named
+licensed reviewer before publishing.
 
 - [x] EDE replaced MOHAP as drug regulator — 12 Sep 2026
 - [ ] UAE pharmacist licensing: MOH Northern Emirates vs. DHA vs. SHA

@@ -1,5 +1,6 @@
 ---
 title: "The UAE's drug regulator changed in 2025 — here's what actually moved"
+image: "/assets/img/posts/uae-drug-regulator-what-changed.svg"
 reviewed_by: "Muaaz Butt, Licensed Pharmacist (MOH Northern Emirates, DHA Dubai)"
 sources:
   - name: "Federal Decree-Law No. (38) of 2024 — official text, UAE Legislation"
