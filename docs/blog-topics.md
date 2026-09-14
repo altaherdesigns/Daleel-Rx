@@ -5,8 +5,11 @@ Auto-drafted from the unchecked lines below by the scheduled Action. Prefix a li
 licensed reviewer before publishing.
 
 - [x] EDE replaced MOHAP as drug regulator — 12 Sep 2026
-- [ ] UAE pharmacist licensing: MOH Northern Emirates vs. DHA vs. SHA
+- [x] UAE pharmacist licensing: MOH Northern Emirates vs. DHA vs. SHA — 12 Sep 2026
 - [ ] CPD/CME hour requirements by emirate
 - [ ] What "dispensing mode" on a UAE registration record means
 - [ ] Bringing personal medication into the UAE — the legal framework
 - [ ] Generic substitution rules, emirate by emirate
+- [x] Probiotics: what the evidence actually shows — 14 Sep 2026
+- [x] Magnesium and its types: what the evidence shows — 14 Sep 2026
+- [x] Weight-loss supplements: what actually has evidence — 14 Sep 2026
