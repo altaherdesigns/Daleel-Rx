@@ -1,0 +1,152 @@
+<style>
+  :root{
+    color-scheme: light;
+    --bg:#EEF1EF; --surface:#FAFBFA; --fg:#10222E; --fg2:#4A5C66;
+    --rule:#C8D2CF; --soft:#DDE4E1;
+    --ok:#12604E; --warn:#8A5A06; --no:#9A3324; --none:#65757D;
+    --ok-w:#DCEBE5; --warn-w:#F2E7D2; --no-w:#F4E1DD; --none-w:#E3E8EA;
+    --ghost:#D7DFDC;
+    --radius:4px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      color-scheme: dark;
+      --bg:#0C1417; --surface:#131E23; --fg:#E6EDEB; --fg2:#9CAEB4;
+      --rule:#26343A; --soft:#1B272C;
+      --ok:#5BC5A4; --warn:#DCA74A; --no:#E68A7A; --none:#8C9DA5;
+      --ok-w:#14302A; --warn-w:#2F2517; --no-w:#34201C; --none-w:#1C262A;
+      --ghost:#18252A;
+    }
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--fg);
+    font-family:"IBM Plex Sans","IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:1.0625rem; line-height:1.55; -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+  .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+  [hidden]{display:none!important}
+  :focus-visible{outline:2px solid var(--ok); outline-offset:3px; border-radius:2px}
+  .wrap{max-width:62rem; margin-inline:auto; padding-inline:20px}
+
+  /* header */
+  .bar{display:flex; align-items:center; gap:1rem; padding-block:1.25rem}
+  .bar img{height:30px; width:auto; display:block}
+  .bar .word{font-weight:600; font-size:1.2rem; letter-spacing:-.01em; text-decoration:none}
+  .bar nav{margin-inline-start:auto; display:flex; gap:1.25rem; font-size:.9375rem}
+  .bar nav a{text-decoration:none; color:var(--fg2)}
+  .bar nav a:hover{color:var(--fg)}
+
+  /* hero */
+  .hero{position:relative; padding-block:3.5rem 4rem; overflow:hidden}
+  .glyph{
+    position:absolute; right:-.02em; left:auto; top:.1em; z-index:0;
+    font-family:"IBM Plex Sans Arabic","IBM Plex Sans",serif; font-weight:600;
+    font-size:clamp(7.5rem, 24vw, 18rem); line-height:1; color:var(--ghost);
+    pointer-events:none; user-select:none;
+  }
+  .hero-inner{position:relative; z-index:1; max-width:38rem}
+  h1{
+    font-size:clamp(2.2rem, 5.2vw, 3.4rem); line-height:1.06; letter-spacing:-.028em;
+    font-weight:600; margin:0 0 1.1rem; text-wrap:balance;
+  }
+  .lede{font-size:1.2rem; line-height:1.5; color:var(--fg2); margin:0 0 2rem; max-width:34rem}
+
+  .actions{display:flex; flex-wrap:wrap; gap:.75rem; align-items:center}
+  .btn{
+    font:inherit; font-weight:600; font-size:1rem; cursor:pointer;
+    border-radius:var(--radius); padding:.8rem 1.25rem; border:1px solid transparent;
+    text-decoration:none; display:inline-flex; align-items:center; justify-content:center;
+    min-height:48px;
+  }
+  .btn-primary{background:var(--fg); color:var(--bg)}
+  .btn-primary:hover{opacity:.9}
+  .btn-ghost{background:transparent; color:var(--fg); border-color:var(--rule)}
+  .btn-ghost:hover{border-color:var(--fg)}
+
+  .signup{display:flex; gap:.5rem; flex:1 1 20rem; max-width:26rem}
+  .signup input{
+    flex:1; min-width:0; font:inherit; font-size:1rem; color:var(--fg);
+    background:var(--surface); border:1px solid var(--rule); border-radius:var(--radius);
+    padding:.75rem .9rem; min-height:48px;
+  }
+  .signup input::placeholder{color:var(--fg2); opacity:.8}
+  .signup input:focus{outline:none; border-color:var(--fg)}
+  .formnote{font-size:.875rem; color:var(--fg2); margin:.75rem 0 0; min-height:1.3em}
+  .formnote.ok{color:var(--ok)}
+
+  /* three lines */
+  .facts{border-top:1px solid var(--rule); display:grid; gap:0}
+  .fact{display:grid; grid-template-columns:9rem 1fr; gap:1rem; padding-block:1.35rem; border-bottom:1px solid var(--rule)}
+  .fact h2{font-size:1rem; font-weight:600; margin:0}
+  .fact p{margin:0; color:var(--fg2); max-width:40rem}
+  @media (max-width:36rem){ .fact{grid-template-columns:1fr; gap:.35rem} }
+
+  /* blog list */
+  .reading{padding-block:3.5rem 2rem}
+  .reading h2{font-size:1.35rem; font-weight:600; letter-spacing:-.01em; margin:0 0 1rem}
+  .posts{list-style:none; margin:0; padding:0}
+  .posts li{border-top:1px solid var(--soft)}
+  .posts a{display:grid; grid-template-columns:1fr auto; gap:1rem; padding-block:.9rem; text-decoration:none}
+  .posts a:hover .pt{text-decoration:underline; text-underline-offset:3px}
+  .pt{font-weight:450}
+  .pd{color:var(--fg2); font-size:.875rem; white-space:nowrap; font-variant-numeric:tabular-nums}
+  .more{display:inline-block; margin-top:1rem; font-size:.9375rem; color:var(--fg2)}
+
+  footer.site{padding-block:2.5rem 3rem; color:var(--fg2); font-size:.875rem; border-top:1px solid var(--rule); margin-top:2rem}
+  footer.site p{margin:0 0 .35rem; max-width:44rem}
+
+  /* demo sheet */
+  dialog.demo{
+    border:0; padding:0; background:transparent; color:var(--fg);
+    width:min(40rem, calc(100vw - 24px)); max-height:min(46rem, calc(100dvh - 24px));
+  }
+  dialog.demo::backdrop{background:rgba(8,16,20,.55)}
+  .sheet{background:var(--surface); border:1px solid var(--rule); border-radius:6px; display:flex; flex-direction:column; max-height:inherit; overflow:hidden}
+  .sheet-top{display:flex; align-items:center; gap:.75rem; padding:.85rem 1rem; border-bottom:1px solid var(--soft)}
+  .sheet-top strong{font-weight:600}
+  .sheet-top .tag{font-size:.75rem; color:var(--fg2); border:1px solid var(--rule); border-radius:99px; padding:.1rem .55rem}
+  .x{margin-inline-start:auto; background:transparent; border:0; color:var(--fg2); font:inherit; font-size:1.5rem; line-height:1; cursor:pointer; min-width:44px; min-height:44px}
+  .x:hover{color:var(--fg)}
+  .q{display:flex; align-items:center; gap:.6rem; padding:.8rem 1rem; border-bottom:1px solid var(--soft)}
+  .q svg{flex:none; color:var(--fg2)}
+  .q input{flex:1; min-width:0; border:0; background:transparent; color:var(--fg); font:inherit; font-size:1.125rem; padding:.2rem 0}
+  .q input:focus{outline:none}
+  .chips{display:flex; flex-wrap:wrap; gap:.4rem; padding:.7rem 1rem 0}
+  .chips button{font:inherit; font-size:.8125rem; color:var(--fg2); background:var(--bg); border:1px solid var(--soft); border-radius:99px; padding:.25rem .7rem; cursor:pointer}
+  .chips button:hover{color:var(--fg); border-color:var(--rule)}
+  .scroll{overflow:auto; flex:1}
+  .hits{list-style:none; margin:0; padding:.4rem 0}
+  .hits button{width:100%; text-align:start; border:0; background:transparent; color:inherit; font:inherit; padding:.65rem 1rem; cursor:pointer; display:block}
+  .hits button:hover, .hits button:focus-visible{background:var(--bg)}
+  .hn{font-weight:450}
+  .hs{font-size:.875rem; color:var(--fg2)}
+  .empty{padding:1rem; color:var(--fg2); font-size:.9375rem}
+
+  .rec{padding:1rem 1rem 1.1rem}
+  .back{font:inherit; font-size:.875rem; color:var(--fg2); background:transparent; border:0; padding:0; cursor:pointer; margin-bottom:.8rem}
+  .back:hover{color:var(--fg)}
+  .rec h3{font-size:1.35rem; font-weight:600; letter-spacing:-.01em; margin:0 0 .1rem}
+  .rec .gen{color:var(--fg2); margin:0 0 1rem}
+  .row{display:grid; grid-template-columns:7.5rem 1fr; gap:.8rem; padding-block:.55rem; border-top:1px solid var(--soft); align-items:baseline}
+  .rl{font-size:.8125rem; color:var(--fg2)}
+  .pill{font-size:.75rem; font-weight:600; padding:.18rem .5rem; border-radius:3px; display:inline-block}
+  .ok{background:var(--ok-w); color:var(--ok)}
+  .warn{background:var(--warn-w); color:var(--warn)}
+  .no{background:var(--no-w); color:var(--no)}
+  .none{background:var(--none-w); color:var(--none)}
+  .cite{display:block; font-size:.8125rem; color:var(--fg2); margin-top:.25rem}
+  .alts{list-style:none; margin:.2rem 0 0; padding:0}
+  .alts li{font-size:.9375rem; padding-block:.15rem}
+  .alts button{font:inherit; color:inherit; background:none; border:0; padding:0; cursor:pointer; text-align:start; text-decoration:underline; text-decoration-color:var(--rule); text-underline-offset:3px}
+  .stamp{font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.72rem; letter-spacing:.03em; color:var(--fg2); border-top:1px dashed var(--rule); margin-top:.9rem; padding-top:.6rem}
+  .sheet-foot{padding:.75rem 1rem; border-top:1px solid var(--soft); display:flex; flex-wrap:wrap; gap:.6rem; align-items:center; background:var(--bg)}
+  .sheet-foot span{font-size:.875rem; color:var(--fg2); flex:1 1 14rem}
+
+  @media (prefers-reduced-motion:no-preference){
+    dialog.demo[open] .sheet{animation:rise .22s ease-out}
+    @keyframes rise{from{transform:translateY(10px); opacity:.0} to{transform:none; opacity:1}}
+  }
+</style>
