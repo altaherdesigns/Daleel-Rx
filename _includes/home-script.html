@@ -1,0 +1,149 @@
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- sign-up ---------- */
+  var form = document.getElementById("signup");
+  var note = document.getElementById("formnote");
+  var email = document.getElementById("email");
+
+  form.addEventListener("submit", function (e) {
+    var v = (email.value || "").trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) {
+      e.preventDefault();
+      note.className = "formnote";
+      note.textContent = "Enter an email address like name@example.com.";
+      email.focus();
+      return;
+    }
+    var action = form.getAttribute("action") || "";
+    if (!/^https?:\/\//.test(action)) return; /* let the browser handle it */
+    e.preventDefault();
+    note.className = "formnote";
+    note.textContent = "Adding you…";
+    fetch(action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } })
+      .then(function (r) {
+        if (!r.ok) throw new Error(String(r.status));
+        form.reset();
+        note.className = "formnote ok";
+        note.textContent = "You're on the list. We'll email you once, at launch.";
+      })
+      .catch(function () {
+        note.className = "formnote";
+        note.textContent = "That didn't go through. Check your connection and try again.";
+      });
+  });
+
+  /* ---------- demo ---------- */
+  var DATA = [];
+  try { DATA = JSON.parse(document.getElementById("demo-json").textContent).records || []; } catch (err) { DATA = []; }
+  var META = {};
+  try { META = JSON.parse(document.getElementById("demo-json").textContent).meta || {}; } catch (err) { META = {}; }
+
+  var dlg = document.getElementById("demo");
+  var q = document.getElementById("dq");
+  var body = document.getElementById("dbody");
+  var chips = document.getElementById("chips");
+  document.getElementById("dcount").textContent = "Demo · " + DATA.length + " products";
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function norm(s) { return String(s || "").toLowerCase().normalize("NFKD").replace(/[^\w\s]/g, " "); }
+
+  var SUGGEST = META.suggest || [];
+  chips.innerHTML = SUGGEST.map(function (s) {
+    return '<button type="button" data-q="' + esc(s) + '">' + esc(s) + "</button>";
+  }).join("");
+  chips.addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-q]");
+    if (!b) return;
+    q.value = b.getAttribute("data-q");
+    list();
+    q.focus();
+  });
+
+  function list() {
+    var t = norm(q.value).trim();
+    var rows = DATA;
+    if (t) {
+      var parts = t.split(/\s+/);
+      rows = DATA.filter(function (d) {
+        var hay = norm(d.n + " " + d.g + " " + (d.brand || ""));
+        return parts.every(function (p) { return hay.indexOf(p) > -1; });
+      });
+    }
+    chips.hidden = !!t;
+    if (!rows.length) {
+      body.innerHTML = '<p class="empty">Nothing in the demo matches “' + esc(q.value) +
+        '”. The demo holds ' + DATA.length + ' products; the app holds 51,296.</p>';
+      return;
+    }
+    body.innerHTML = '<ul class="hits">' + rows.map(function (d) {
+      return '<li><button type="button" data-id="' + esc(d.id) + '"><span class="hn">' + esc(d.n) +
+        '</span><br><span class="hs">' + esc(d.g) + "</span></button></li>";
+    }).join("") + "</ul>";
+  }
+
+  function pill(v) {
+    if (!v) return '<span class="pill none">No data</span>';
+    return '<span class="pill ' + esc(v.c) + '">' + esc(v.l) + "</span>" +
+      (v.src ? '<span class="cite">' + esc(v.src) + "</span>" : "");
+  }
+
+  function show(id) {
+    var d = null;
+    for (var i = 0; i < DATA.length; i++) if (DATA[i].id === id) d = DATA[i];
+    if (!d) return;
+    var alts = DATA.filter(function (o) { return o.id !== d.id && o.key && o.key === d.key; });
+    body.innerHTML =
+      '<div class="rec">' +
+        '<button class="back" type="button" id="back">← All results</button>' +
+        "<h3>" + esc(d.n) + "</h3>" +
+        '<p class="gen">' + esc(d.g) + "</p>" +
+        (d.disp ? '<div class="row"><span class="rl">Dispensing</span><span>' + esc(d.disp) + "</span></div>" : "") +
+        (d.mfr ? '<div class="row"><span class="rl">Made in</span><span>' + esc(d.mfr) + "</span></div>" : "") +
+        '<div class="row"><span class="rl">Pregnancy</span><span>' + pill(d.preg) + "</span></div>" +
+        '<div class="row"><span class="rl">Breastfeeding</span><span>' + pill(d.lact) + "</span></div>" +
+        '<div class="row"><span class="rl">Same ingredient</span><span>' +
+          (alts.length
+            ? '<ul class="alts">' + alts.map(function (a) {
+                return '<li><button type="button" data-id="' + esc(a.id) + '">' + esc(a.n) + "</button></li>";
+              }).join("") + "</ul>"
+            : "") +
+          '<span class="cite">' + (d.altCount ? esc(d.altCount) + " with the same ingredient and strength in the full app" : "No other product with this exact strength") + "</span>" +
+        "</span></div>" +
+        '<div class="stamp">Snapshot ' + esc(META.snapshot || "") + (d.src ? " · " + esc(d.src) : "") + "</div>" +
+      "</div>";
+    var back = document.getElementById("back");
+    back.addEventListener("click", function () { list(); q.focus(); });
+    back.focus();
+  }
+
+  body.addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-id]");
+    if (b) show(b.getAttribute("data-id"));
+  });
+  q.addEventListener("input", list);
+
+  function open() {
+    if (typeof dlg.showModal === "function") dlg.showModal(); else dlg.setAttribute("open", "");
+    q.value = "";
+    list();
+    setTimeout(function () { q.focus(); }, 30);
+  }
+  function close() { if (dlg.close) dlg.close(); else dlg.removeAttribute("open"); }
+
+  document.getElementById("try").addEventListener("click", open);
+  document.getElementById("close").addEventListener("click", close);
+  dlg.addEventListener("click", function (e) { if (e.target === dlg) close(); });
+  document.getElementById("dnotify").addEventListener("click", function () {
+    close();
+    email.focus();
+    email.scrollIntoView({ block: "center", behavior: "smooth" });
+  });
+  if (location.hash === "#try") open();
+})();
+</script>

@@ -1,0 +1,57 @@
+{%- comment -%}
+  Article structured data for blog posts. Include inside <head> of the post layout.
+  Uses page.author / page.author_credentials / page.last_modified_at when present.
+{%- endcomment -%}
+{%- assign modified = page.last_modified_at | default: page.date -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["Article", "MedicalWebPage"],
+      "@id": "{{ site.url }}{{ page.url }}#article",
+      "headline": {{ page.title | jsonify }},
+      "description": {{ page.description | jsonify }},
+      "url": "{{ site.url }}{{ page.url }}",
+      "mainEntityOfPage": "{{ site.url }}{{ page.url }}",
+      "datePublished": "{{ page.date | date_to_xmlschema }}",
+      "dateModified": "{{ modified | date_to_xmlschema }}",
+      "lastReviewed": "{{ modified | date: '%Y-%m-%d' }}",
+      "inLanguage": "en",
+      "keywords": {{ page.keywords | jsonify }},
+      "image": "{{ site.url }}{{ page.image | default: '/assets/img/og-home.png' }}",
+      "author": { "@id": "{{ site.url }}/about/#muaaz" },
+      "reviewedBy": { "@id": "{{ site.url }}/about/#muaaz" },
+      "publisher": { "@id": "{{ site.url }}/#org" },
+      "isPartOf": { "@id": "{{ site.url }}/#website" }
+    },
+    {
+      "@type": "Person",
+      "@id": "{{ site.url }}/about/#muaaz",
+      "name": "Muaaz Butt",
+      "jobTitle": "Pharmacist",
+      "url": "{{ site.url }}/about/",
+      "hasCredential": [
+        { "@type": "EducationalOccupationalCredential", "credentialCategory": "license", "name": "Pharmacist licence", "recognizedBy": { "@type": "GovernmentOrganization", "name": "UAE Ministry of Health and Prevention" } },
+        { "@type": "EducationalOccupationalCredential", "credentialCategory": "license", "name": "Pharmacist licence", "recognizedBy": { "@type": "GovernmentOrganization", "name": "Dubai Health Authority" } }
+      ],
+      "workLocation": { "@type": "Place", "name": "Fujairah, United Arab Emirates" }
+    },
+    {
+      "@type": "Organization",
+      "@id": "{{ site.url }}/#org",
+      "name": "Daleel Rx",
+      "url": "{{ site.url }}/",
+      "logo": "{{ site.url }}/assets/brand/daleel-rx-logo.svg"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{ site.url }}/" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "{{ site.url }}/blog/" },
+        { "@type": "ListItem", "position": 3, "name": {{ page.title | jsonify }}, "item": "{{ site.url }}{{ page.url }}" }
+      ]
+    }
+  ]
+}
+</script>

@@ -1,0 +1,5 @@
+{%- assign modified = page.last_modified_at | default: page.date -%}
+<p class="byline">
+  By <a href="/about/" rel="author">{{ page.author | default: "Muaaz Butt" }}</a>, {{ page.author_credentials | default: "Licensed Pharmacist, MOH Northern Emirates and DHA Dubai" }}.
+  <span class="dates">Published <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%-d %B %Y" }}</time>{% if page.last_modified_at and page.last_modified_at != page.date %} · Last reviewed <time datetime="{{ modified | date_to_xmlschema }}">{{ modified | date: "%-d %B %Y" }}</time>{% endif %}</span>
+</p>
